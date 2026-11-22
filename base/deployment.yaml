@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agenda-web
+  labels:
+    app: agenda-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agenda-web
+  template:
+    metadata:
+      labels:
+        app: agenda-web
+    spec:
+      containers:
+        - name: agenda-web
+          image: agenda-app
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
